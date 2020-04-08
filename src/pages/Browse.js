@@ -22,7 +22,7 @@ function Browse(props) {
   }
 
   return (
-    <div>
+    <div data-testid="browserPage">
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );

@@ -15,7 +15,7 @@ function Login(props) {
   }
 
   return (
-    <div>
+    <div data-testid="loginPage">
       <button onClick={handleLogin}>Login</button>
     </div>
   );
