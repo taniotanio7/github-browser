@@ -1,10 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { ThemeProvider } from "theme-ui";
-import theme from "./theme";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
@@ -15,9 +13,8 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <CssBaseline />
+      <App />
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
