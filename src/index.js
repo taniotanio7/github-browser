@@ -1,21 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import firebase from "firebase/app";
 
-const client = new ApolloClient({
-  uri: "https://api.github.com/graphql",
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyDTlklb3mWCqOjQQo7LHLvTcwlH6ysHgvM",
+  authDomain: "github-browser-dcaca.firebaseapp.com",
+  databaseURL: "https://github-browser-dcaca.firebaseio.com",
+  projectId: "github-browser-dcaca",
+  storageBucket: "github-browser-dcaca.appspot.com",
+  messagingSenderId: "371646819710",
+  appId: "1:371646819710:web:d2f749fc1c154ae484172f",
+};
+
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <CssBaseline />
-      <App />
-    </ApolloProvider>
+    <CssBaseline />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
