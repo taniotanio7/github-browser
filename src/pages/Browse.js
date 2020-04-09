@@ -2,7 +2,9 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { InView } from "react-intersection-observer";
+import { CircularProgress } from "@material-ui/core";
 import "@github/g-emoji-element";
+import { makeStyles } from "@material-ui/core/styles";
 
 const REPOSITORY_QUERY = gql`
   query QueryRepositoriesList($searchQuery: String!, $cursor: String) {
@@ -64,12 +66,23 @@ const REPOSITORY_QUERY = gql`
   }
 `;
 
-function Browse() {
-  const { data, loading, error, fetchMore } = useQuery(REPOSITORY_QUERY, {
-    variables: { searchQuery: "topic:react" },
-  });
+const useStyles = makeStyles({
+  loader: {
+    position: "fixed",
+    top: "10px",
+    right: "10px",
+  },
+});
 
-  if (loading) {
+function Browse() {
+  const { data, error, fetchMore, networkStatus } = useQuery(REPOSITORY_QUERY, {
+    variables: { searchQuery: "topic:react" },
+    notifyOnNetworkStatusChange: true,
+  });
+  const styles = useStyles();
+
+  // Initial load
+  if (networkStatus === 1) {
     return <p>Loading...</p>;
   }
 
@@ -158,6 +171,8 @@ function Browse() {
           </div>
         );
       })}
+      {/* Refetching */}
+      {networkStatus === 3 && <CircularProgress className={styles.loader} />}
     </div>
   );
 }
