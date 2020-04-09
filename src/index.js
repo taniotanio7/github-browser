@@ -17,13 +17,24 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-ReactDOM.render(
+let content = (
   <React.StrictMode>
     <CssBaseline />
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  // React.Strictmode causes the Apollo Devtools to not work properly, omit in development build
+  content = (
+    <>
+      <CssBaseline />
+      <App />
+    </>
+  );
+}
+
+ReactDOM.render(content, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

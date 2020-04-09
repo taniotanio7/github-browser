@@ -50,6 +50,7 @@ function reducer(state, action) {
         };
       }
     case "LOGOUT":
+      state.apolloClient.resetStore();
       return { ...state, user: null, apolloClient: null };
     case "FINISH_LOADING":
       return { ...state, loading: true };
