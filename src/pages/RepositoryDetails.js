@@ -10,6 +10,7 @@ const REPOSITORY_DETAILS_QUERY = gql`
       ... on Repository {
         name
         nameWithOwner
+        humanReadableName @client
         createdAt
         descriptionHTML
         url
@@ -70,7 +71,7 @@ const RepositoryDetails = ({ repoId }) => {
 
   return (
     <div>
-      <h1>{repo.name}</h1>
+      <h1>{repo.humanReadableName}</h1>
       <p>Repository name: {repo.nameWithOwner}</p>
       <p>Issues: {repo.issues.totalCount}</p>
       <a href={repo.licenseInfo.url}>
