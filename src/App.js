@@ -2,11 +2,13 @@ import React, { useEffect, useReducer } from "react";
 import { Router } from "@reach/router";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
+import ErrorBoundary from "react-error-boundary";
 import firebase from "firebase/app";
 import "firebase/auth";
 
 import Login from "./pages/Login";
 import Browse from "./pages/Browse";
+import UnhandledError from "./pages/UnhandledError";
 
 import { apolloConfig } from "./apollo";
 
@@ -49,6 +51,9 @@ function reducer(state, action) {
       }
     case "LOGOUT":
       state.apolloClient.resetStore();
+      if (localStorage.getItem("githubToken")) {
+        localStorage.removeItem("githubToken");
+      }
       return { ...state, user: null, apolloClient: null };
     case "FINISH_LOADING":
       return { ...state, loading: true };
@@ -70,9 +75,6 @@ function App() {
         dispatch({ type: "LOGIN", payload: { user, token } });
       } else {
         dispatch({ type: "LOGOUT" });
-        if (localStorage.getItem("githubToken")) {
-          localStorage.removeItem("githubToken");
-        }
       }
       dispatch({ type: "END_LOADING" });
     });
@@ -83,11 +85,16 @@ function App() {
   }
 
   return (
-    <ApolloProvider client={state.apolloClient}>
-      <Router>
-        <Browse path="/" />
-      </Router>
-    </ApolloProvider>
+    <ErrorBoundary
+      FallbackComponent={UnhandledError}
+      onError={() => dispatch({ type: "LOGOUT" })}
+    >
+      <ApolloProvider client={state.apolloClient}>
+        <Router>
+          <Browse path="/" />
+        </Router>
+      </ApolloProvider>
+    </ErrorBoundary>
   );
 }
 

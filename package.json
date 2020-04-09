@@ -17,6 +17,7 @@
     "graphql": "^15.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-error-boundary": "^1.2.5",
     "react-intersection-observer": "^8.26.1",
     "react-scripts": "3.4.1"
   },
