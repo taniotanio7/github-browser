@@ -50,7 +50,7 @@ function reducer(state, action) {
         };
       }
     case "LOGOUT":
-      state.apolloClient.resetStore();
+      state.apolloClient && state.apolloClient.resetStore();
       if (localStorage.getItem("githubToken")) {
         localStorage.removeItem("githubToken");
       }
