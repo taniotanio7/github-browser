@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import { InView } from "react-intersection-observer";
 import "@github/g-emoji-element";
 
 const REPOSITORY_QUERY = gql`
@@ -113,7 +114,7 @@ function Browse() {
   return (
     <div data-testid="browserPage">
       <p>Total repositories matching query: {totalRepositories}</p>
-      {repos.map((repo) => {
+      {repos.map((repo, i) => {
         return (
           <div key={repo.id}>
             <a href={repo.url}>
@@ -146,10 +147,17 @@ function Browse() {
               Total commit count:{" "}
               {repo.defaultBranchRef.target.history.totalCount}
             </p>
+            {i === repos.length - 3 && (
+              <InView
+                as="div"
+                triggerOnce
+                onChange={(inView) => (inView ? handleLoadMore() : null)}
+                children={null}
+              />
+            )}
           </div>
         );
       })}
-      <button onClick={handleLoadMore}>Load more</button>
     </div>
   );
 }
