@@ -11,6 +11,7 @@ import Browse from "./pages/Browse";
 import UnhandledError from "./pages/UnhandledError";
 
 import { apolloConfig } from "./apollo";
+import RepositoryDetails from "./pages/RepositoryDetails";
 
 function getInitialState() {
   const token = localStorage.getItem("githubToken");
@@ -92,6 +93,7 @@ function App() {
       <ApolloProvider client={state.apolloClient}>
         <Router>
           <Browse path="/" />
+          <RepositoryDetails path="repo/:repoId" />
         </Router>
       </ApolloProvider>
     </ErrorBoundary>

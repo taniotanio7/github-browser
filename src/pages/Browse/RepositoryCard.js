@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const RepositoryCard = ({ repo }) => {
   return (
@@ -26,6 +27,7 @@ const RepositoryCard = ({ repo }) => {
       <p>
         Total commit count: {repo.defaultBranchRef.target.history.totalCount}
       </p>
+      <Link to={`/repo/${repo.id}`}>Read details</Link>
     </div>
   );
 };

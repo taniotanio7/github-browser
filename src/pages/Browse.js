@@ -5,10 +5,9 @@ import { InView } from "react-intersection-observer";
 import { CircularProgress } from "@material-ui/core";
 import "@github/g-emoji-element";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase from "firebase";
-import "firebase/auth";
 
 import RepositoryCard from "./Browse/RepositoryCard";
+import handleGraphqlErrors from "../utils/handleGraphqlErrors";
 
 const REPOSITORY_QUERY = gql`
   query QueryRepositoriesList($searchQuery: String!, $cursor: String) {
@@ -91,11 +90,7 @@ function Browse() {
   }
 
   if (error) {
-    // Check if unauthenticated
-    if (error?.networkError?.statusCode === 401) {
-      firebase.auth().signOut();
-    }
-    return <p>Error.</p>;
+    return handleGraphqlErrors(error);
   }
 
   function handleLoadMore() {
