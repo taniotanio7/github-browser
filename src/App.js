@@ -8,9 +8,7 @@ import "firebase/auth";
 import Login from "./pages/Login";
 import Browse from "./pages/Browse";
 
-const apolloConfig = {
-  uri: "https://api.github.com/graphql",
-};
+import { apolloConfig } from "./apollo";
 
 function getInitialState() {
   const token = localStorage.getItem("githubToken");

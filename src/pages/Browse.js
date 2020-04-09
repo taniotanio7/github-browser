@@ -23,6 +23,7 @@ const REPOSITORY_QUERY = gql`
             homepageUrl
             isArchived
             openGraphImageUrl
+            hasCardImg @client
             repositoryTopics(first: 3) {
               nodes {
                 topic {
@@ -83,10 +84,6 @@ function Browse() {
           previousResult,
           { fetchMoreResult: { search: result } }
         ) => {
-          // console.log(previousResult);
-          // console.log(result);
-          // return previousResult;
-
           const previousEdges = previousResult.search.edges;
           const newEdges = result.edges;
           const newPageInfo = result.pageInfo;
@@ -108,14 +105,7 @@ function Browse() {
     }
   }
 
-  const repos = data.search.edges
-    .map((obj) => obj.node)
-    .map((obj) => {
-      // TODO: Add the new field by using Apollo client resolver
-      const cardImgRegex = /^https:\/\/repository-images/g;
-      const hasCardImg = cardImgRegex.test(obj.openGraphImageUrl);
-      return { ...obj, hasCardImg };
-    });
+  const repos = data.search.edges.map((obj) => obj.node);
   const totalRepositories = data.search.repositoryCount;
   const endCursor = data.search.pageInfo.endCursor;
   const hasNextPage = data.search.pageInfo.hasNextPage;
