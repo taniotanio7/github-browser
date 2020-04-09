@@ -6,6 +6,8 @@ import { CircularProgress } from "@material-ui/core";
 import "@github/g-emoji-element";
 import { makeStyles } from "@material-ui/core/styles";
 
+import RepositoryCard from "./Browse/RepositoryCard";
+
 const REPOSITORY_QUERY = gql`
   query QueryRepositoriesList($searchQuery: String!, $cursor: String) {
     search(type: REPOSITORY, query: $searchQuery, first: 9, after: $cursor) {
@@ -129,37 +131,8 @@ function Browse() {
       <p>Total repositories matching query: {totalRepositories}</p>
       {repos.map((repo, i) => {
         return (
-          <div key={repo.id}>
-            <a href={repo.url}>
-              <p>{repo.name}</p>
-            </a>
-            <p
-              dangerouslySetInnerHTML={{ __html: repo.shortDescriptionHTML }}
-            />
-            <img
-              src={repo.openGraphImageUrl}
-              alt={repo.hasCardImg ? "Project header image" : "Project logo"}
-              style={
-                repo.hasCardImg ? { maxWidth: "400px" } : { maxHeight: "100px" }
-              }
-            />
-            <p>Owner: {repo.owner?.login}</p>
-            <p>Stars: {repo.stargazers.totalCount}</p>
-            {repo.licenseInfo && (
-              <p>
-                Licence: {repo.licenseInfo?.nickname ?? repo.licenseInfo.name}
-              </p>
-            )}
-            <p>
-              Latest commit:{" "}
-              {new Date(
-                repo.defaultBranchRef.target.committedDate
-              ).toLocaleDateString()}
-            </p>
-            <p>
-              Total commit count:{" "}
-              {repo.defaultBranchRef.target.history.totalCount}
-            </p>
+          <React.Fragment key={repo.id}>
+            <RepositoryCard repo={repo} />
             {i === repos.length - 3 && (
               <InView
                 as="div"
@@ -168,7 +141,7 @@ function Browse() {
                 children={null}
               />
             )}
-          </div>
+          </React.Fragment>
         );
       })}
       {/* Refetching */}
