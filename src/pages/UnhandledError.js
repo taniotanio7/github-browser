@@ -9,7 +9,7 @@ const UnhandledError = ({ error }) => {
   }, []);
 
   function handleRefresh() {
-    location.reload();
+    window.location.reload();
   }
 
   return (
