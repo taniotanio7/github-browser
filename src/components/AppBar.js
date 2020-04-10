@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
+    display: "flex",
+    cursor: "pointer",
     flexGrow: 1,
   },
 }));
@@ -26,10 +28,10 @@ const AppBar = ({ loggedIn, ...props }) => {
   return (
     <DefaultAppBar position="static" {...props}>
       <Toolbar>
-        <GoOctoface size={28} className={styles.appIcon} />
-        <Typography variant="h6" className={styles.title}>
-          Github Browser
-        </Typography>
+        <div onClick={() => navigate("/")} className={styles.title}>
+          <GoOctoface size={28} className={styles.appIcon} />
+          <Typography variant="h6">Github Browser</Typography>
+        </div>
         {loggedIn && (
           <Button
             color="inherit"

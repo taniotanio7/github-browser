@@ -5,6 +5,7 @@ import { ReactComponent as GingerCatIllustration } from "../static/ginger-cat-74
 
 import SearchBox from "./Browse/SearchBox";
 import RepositoriesList from "./Browse/RepositoriesList";
+import { useLocation } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,14 +47,14 @@ const useStyles = makeStyles((theme) => ({
 
 function Browse() {
   const styles = useStyles();
-  const urlParams = new URLSearchParams(window.location.search);
-  const [searchQuery, setSarchQuery] = useState(urlParams.get("search"));
+  // const location = useLocation();
+  // const urlParams = new URLSearchParams(location.search);
+  const [searchQuery, setSarchQuery] = useState("");
 
   return (
     <Container className={styles.root}>
       <div className={styles.searchContainer}>
         <SearchBox
-          initialQuery={searchQuery ?? ""}
           onChange={(searchQuery) => {
             setSarchQuery(searchQuery);
           }}
