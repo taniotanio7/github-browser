@@ -2407,7 +2407,7 @@ type Deployment implements Node {
     "Identifies the date and time when the object was created."
     createdAt: DateTime!
     "Identifies the actor who triggered the deployment."
-    creator: Actor
+    creator: Actor!
     "Identifies the primary key from the database."
     databaseId: Int
     "The deployment description."
@@ -2484,7 +2484,7 @@ type DeploymentStatus implements Node {
     "Identifies the date and time when the object was created."
     createdAt: DateTime!
     "Identifies the actor who triggered the deployment."
-    creator: Actor
+    creator: Actor!
     "Identifies the deployment associated with status."
     deployment: Deployment!
     "Identifies the description of the deployment."
@@ -10243,6 +10243,8 @@ type RepoRemoveTopicAuditEntry implements AuditEntry & Node & OrganizationAuditE
     "The HTTP URL for the user."
     userUrl: URI
 }
+
+directive @client on FIELD
 
 "A repository contains the content for a project."
 type Repository implements Node & ProjectOwner & RegistryPackageOwner & RegistryPackageSearch & RepositoryInfo & Starrable & Subscribable & UniformResourceLocatable {
