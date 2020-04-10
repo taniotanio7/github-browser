@@ -14,7 +14,6 @@ export const REPOSITORY_QUERY = gql`
             id
             viewerHasStarred
             description
-            shortDescriptionHTML
             url
             name
             homepageUrl
@@ -30,7 +29,9 @@ export const REPOSITORY_QUERY = gql`
             }
             isFork
             owner {
+              avatarUrl
               login
+              __typename
             }
             stargazers {
               totalCount
@@ -46,9 +47,6 @@ export const REPOSITORY_QUERY = gql`
             defaultBranchRef {
               target {
                 ... on Commit {
-                  history {
-                    totalCount
-                  }
                   committedDate
                 }
               }

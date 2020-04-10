@@ -4,17 +4,49 @@ import { REPOSITORY_QUERY } from "../../queries";
 import handleGraphqlErrors from "../../utils/handleGraphqlErrors";
 import RepositoryCard from "./RepositoryCard";
 import { InView } from "react-intersection-observer";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Typography, Fab } from "@material-ui/core";
+import { ArrowUpward } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import "@github/g-emoji-element";
 
-const useStyles = makeStyles({
+import ScrollTop from "../../components/ScrollTop";
+
+const useStyles = makeStyles((theme) => ({
+  searchModifiers: {
+    marginTop: theme.spacing(2),
+    display: "flex",
+  },
+  repositoryCount: {
+    fontWeight: 500,
+  },
+  reposList: {
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    alignItems: "start",
+    [theme.breakpoints.up("sm")]: {
+      gridTemplateColumns: "1fr 1fr",
+    },
+    [theme.breakpoints.up("md")]: {
+      gridTemplateColumns: "1fr 1fr 1fr",
+    },
+    gridRowGap: theme.spacing(3),
+    gridColumnGap: theme.spacing(2),
+  },
   loader: {
     position: "fixed",
     top: "10px",
     right: "10px",
   },
-});
+  fab: {
+    position: "fixed",
+    bottom: "10px",
+    right: "10px",
+    [theme.breakpoints.up("sm")]: {
+      bottom: "20px",
+      right: "20px",
+    },
+  },
+}));
 
 const RepositoriesList = ({ searchQuery }) => {
   const styles = useStyles();
@@ -80,23 +112,36 @@ const RepositoriesList = ({ searchQuery }) => {
 
   return (
     <div data-testid="browserPage">
-      <p>Total repositories matching query: {totalRepositories}</p>
-      {repos.map((repo, i) => {
-        return (
-          <React.Fragment key={repo.id}>
-            <RepositoryCard repo={repo} />
-            {i === repos.length - 3 && (
-              <InView
-                as="div"
-                triggerOnce
-                onChange={(inView) => (inView ? handleLoadMore() : null)}
-                children={null}
-              />
-            )}
-          </React.Fragment>
-        );
-      })}
+      <div className={styles.searchModifiers}>
+        <Typography>
+          There were{" "}
+          <span className={styles.repositoryCount}>{totalRepositories}</span>{" "}
+          matching repositories.
+        </Typography>
+      </div>
+      <div className={styles.reposList}>
+        {repos.map((repo, i) => {
+          return (
+            <React.Fragment key={repo.id}>
+              <RepositoryCard repo={repo} />
+              {i === repos.length - 3 && (
+                <InView
+                  as="div"
+                  triggerOnce
+                  onChange={(inView) => (inView ? handleLoadMore() : null)}
+                  children={null}
+                />
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
       {/* Refetching */}
+      <ScrollTop className={styles.fab}>
+        <Fab color="secondary">
+          <ArrowUpward />
+        </Fab>
+      </ScrollTop>
       {networkStatus === 3 && <CircularProgress className={styles.loader} />}
     </div>
   );

@@ -27,7 +27,7 @@ const AppBar = ({ loggedIn, ...props }) => {
 
   return (
     <DefaultAppBar position="static" {...props}>
-      <Toolbar>
+      <Toolbar id="top">
         <div onClick={() => navigate("/")} className={styles.title}>
           <GoOctoface size={28} className={styles.appIcon} />
           <Typography variant="h6">Github Browser</Typography>
