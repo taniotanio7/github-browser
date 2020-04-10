@@ -81,6 +81,7 @@ function Browse() {
   const { data, error, fetchMore, networkStatus } = useQuery(REPOSITORY_QUERY, {
     variables: { searchQuery: "topic:react" },
     notifyOnNetworkStatusChange: true,
+    returnPartialData: true,
   });
   const styles = useStyles();
 

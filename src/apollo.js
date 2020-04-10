@@ -1,4 +1,7 @@
 import { gql } from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { persistCache } from "apollo-cache-persist";
+import localforage from "localforage";
 
 const typeDefs = gql`
   extend type Repository {
@@ -33,6 +36,17 @@ const resolvers = {
     },
   },
 };
+
+export async function setupPersistentCache() {
+  const cache = new InMemoryCache();
+
+  const localforageApollo = localforage.createInstance({
+    name: "apollo-cache",
+  });
+
+  await persistCache({ cache, storage: localforageApollo });
+  return cache;
+}
 
 export const apolloConfig = {
   uri: "https://api.github.com/graphql",

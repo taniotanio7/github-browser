@@ -10,58 +10,38 @@ import Login from "./pages/Login";
 import Browse from "./pages/Browse";
 import UnhandledError from "./pages/UnhandledError";
 
-import { apolloConfig } from "./apollo";
+import { apolloConfig, setupPersistentCache } from "./apollo";
 import RepositoryDetails from "./pages/RepositoryDetails";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function getInitialState() {
   const token = localStorage.getItem("githubToken");
-
-  if (token) {
-    const apolloClient = new ApolloClient({
-      ...apolloConfig,
-      headers: {
-        ...apolloConfig?.headers,
-        Authorization: `bearer ${token}`,
-      },
-    });
-    return { user: null, apolloClient, loading: false };
-  }
-  return { user: null, apolloClient: null, loading: true };
+  return { user: null, token, apolloClient: null, loading: true };
 }
 
 function reducer(state, action) {
+  console.log(`NEW ACTION: ${action.type}`, action.payload);
   switch (action.type) {
     case "LOGIN":
-      if (state.apolloClient) {
-        return {
-          ...state,
-          user: action.payload.user,
-        };
-      } else {
-        return {
-          ...state,
-          user: action.payload.user,
-          apolloClient: new ApolloClient({
-            ...apolloConfig,
-            headers: {
-              ...apolloConfig?.headers,
-              Authorization: `bearer ${action.payload.token}`,
-            },
-          }),
-        };
-      }
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
     case "LOGOUT":
       state.apolloClient && state.apolloClient.resetStore();
       if (localStorage.getItem("githubToken")) {
         localStorage.removeItem("githubToken");
       }
-      return { ...state, user: null, apolloClient: null };
+      return { ...state, token: null, user: null, apolloClient: null };
+    case "APOLLO_SETUP_FINISHED":
+      return { ...state, apolloClient: action.payload.apolloClient };
     case "FINISH_LOADING":
       return { ...state, loading: true };
     case "END_LOADING":
       return { ...state, loading: false };
     default:
-      throw new Error();
+      throw new Error("Reducer operation does not exist");
   }
 }
 
@@ -80,6 +60,28 @@ function App() {
       dispatch({ type: "END_LOADING" });
     });
   }, []);
+
+  // Setup Apollo client
+  useEffect(() => {
+    if (state.token && !state.apolloClient) {
+      (async () => {
+        const cache = await setupPersistentCache();
+        const apolloClient = new ApolloClient({
+          ...apolloConfig,
+          headers: {
+            ...apolloConfig?.headers,
+            Authorization: `bearer ${state.token}`,
+          },
+          cache,
+        });
+        dispatch({ type: "APOLLO_SETUP_FINISHED", payload: { apolloClient } });
+      })();
+    }
+  }, [state]);
+
+  if (state.loading) {
+    return <CircularProgress />;
+  }
 
   if (!state.apolloClient) {
     return <Login />;
