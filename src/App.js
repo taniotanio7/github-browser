@@ -36,7 +36,7 @@ function reducer(state, action) {
       return { ...state, token: null, user: null, apolloClient: null };
     case "APOLLO_SETUP_FINISHED":
       return { ...state, apolloClient: action.payload.apolloClient };
-    case "FINISH_LOADING":
+    case "START_LOADING":
       return { ...state, loading: true };
     case "END_LOADING":
       return { ...state, loading: false };
@@ -52,6 +52,7 @@ function App() {
   useEffect(() => {
     return firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        dispatch({ type: "START_LOADING" });
         const token = localStorage.getItem("githubToken");
         dispatch({ type: "LOGIN", payload: { user, token } });
       } else {
@@ -75,6 +76,7 @@ function App() {
           cache,
         });
         dispatch({ type: "APOLLO_SETUP_FINISHED", payload: { apolloClient } });
+        dispatch({ type: "END_LOADING" });
       })();
     }
   }, [state]);
