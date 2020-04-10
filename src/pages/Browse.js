@@ -1,6 +1,5 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import { InView } from "react-intersection-observer";
 import { CircularProgress } from "@material-ui/core";
 import "@github/g-emoji-element";
@@ -8,66 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import RepositoryCard from "./Browse/RepositoryCard";
 import handleGraphqlErrors from "../utils/handleGraphqlErrors";
-
-const REPOSITORY_QUERY = gql`
-  query QueryRepositoriesList($searchQuery: String!, $cursor: String) {
-    search(type: REPOSITORY, query: $searchQuery, first: 9, after: $cursor) {
-      repositoryCount
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      edges {
-        node {
-          ... on Repository {
-            id
-            viewerHasStarred
-            description
-            shortDescriptionHTML
-            url
-            name
-            homepageUrl
-            isArchived
-            openGraphImageUrl
-            hasCardImg @client
-            repositoryTopics(first: 3) {
-              nodes {
-                topic {
-                  name
-                }
-              }
-            }
-            isFork
-            owner {
-              login
-            }
-            stargazers {
-              totalCount
-            }
-            licenseInfo {
-              name
-              nickname
-              url
-            }
-            assignableUsers {
-              totalCount
-            }
-            defaultBranchRef {
-              target {
-                ... on Commit {
-                  history {
-                    totalCount
-                  }
-                  committedDate
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { REPOSITORY_QUERY } from "../queries";
 
 const useStyles = makeStyles({
   loader: {

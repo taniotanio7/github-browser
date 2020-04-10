@@ -1,57 +1,9 @@
 import React from "react";
-import { gql } from "apollo-boost";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "@apollo/react-hooks";
 import handleGraphqlErrors from "../utils/handleGraphqlErrors";
 
-const REPOSITORY_DETAILS_QUERY = gql`
-  query RepositoryDetails($id: ID!) {
-    node(id: $id) {
-      ... on Repository {
-        name
-        nameWithOwner
-        humanReadableName @client
-        createdAt
-        descriptionHTML
-        url
-        homepageUrl
-        stargazers {
-          totalCount
-        }
-        repositoryTopics(first: 10) {
-          nodes {
-            topic {
-              name
-            }
-          }
-        }
-        licenseInfo {
-          name
-          nickname
-          url
-        }
-        issues {
-          totalCount
-        }
-        defaultBranchRef {
-          target {
-            ... on Commit {
-              history {
-                totalCount
-              }
-              committedDate
-            }
-          }
-        }
-        readme: object(expression: "master:README.md") {
-          ... on Blob {
-            text
-          }
-        }
-      }
-    }
-  }
-`;
+import { REPOSITORY_DETAILS_QUERY } from "../queries";
 
 const RepositoryDetails = ({ repoId }) => {
   const { data, loading, error } = useQuery(REPOSITORY_DETAILS_QUERY, {
@@ -67,7 +19,6 @@ const RepositoryDetails = ({ repoId }) => {
   }
 
   const repo = data.node;
-  console.log(repo);
 
   return (
     <div>
