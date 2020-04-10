@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppBar = ({ loggedIn }) => {
+const AppBar = ({ loggedIn, ...props }) => {
   const styles = useStyles();
 
   return (
-    <DefaultAppBar position="static">
+    <DefaultAppBar position="static" {...props}>
       <Toolbar>
         <GoOctoface size={28} className={styles.appIcon} />
         <Typography variant="h6" className={styles.title}>
