@@ -1,8 +1,18 @@
 import React, { useState } from "react";
+import { TextField, InputAdornment } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Search } from "@material-ui/icons";
 import { debounce } from "lodash-es";
 import { navigate } from "@reach/router";
 
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    color: theme.palette.grey[700],
+  },
+}));
+
 const SearchBox = ({ initialQuery = "", onChange }) => {
+  const styles = useStyles();
   const [query, setQuery] = useState(initialQuery);
   const [debouncedFn, setDebouncedFn] = useState(null);
   const handleChange = (event) => {
@@ -26,15 +36,24 @@ const SearchBox = ({ initialQuery = "", onChange }) => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        name="searchQuery"
-        value={query}
-        onChange={handleChange}
-        onBlur={() => debouncedFn && debouncedFn.flush()}
-      />
-    </div>
+    <TextField
+      fullWidth
+      type="text"
+      name="searchQuery"
+      variant="outlined"
+      value={query}
+      onChange={handleChange}
+      onBlur={() => debouncedFn && debouncedFn.flush()}
+      placeholder="Search..."
+      className={styles.input}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <Search size={26} className={styles.icon} />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 

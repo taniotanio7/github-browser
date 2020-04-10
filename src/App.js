@@ -104,7 +104,7 @@ function App() {
     >
       <Layout loggedIn={true}>
         <ApolloProvider client={state.apolloClient}>
-          <Router>
+          <Router style={{ flexGrow: 1, display: "flex" }}>
             <Browse path="/" />
             <RepositoryDetails path="repo/:repoId" />
           </Router>
