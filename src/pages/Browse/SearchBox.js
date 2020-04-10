@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { debounce } from "lodash-es";
+import { navigate } from "@reach/router";
 
 const SearchBox = ({ initialQuery = "", onChange }) => {
   const [query, setQuery] = useState(initialQuery);
@@ -7,6 +8,11 @@ const SearchBox = ({ initialQuery = "", onChange }) => {
   const handleChange = (event) => {
     event.persist();
     const value = event.target.value;
+    if (value) {
+      navigate(`?search=${value}`, { replace: true });
+    } else {
+      navigate("./", { replace: true });
+    }
     setQuery(value);
     if (!value) {
       // If the change was to empty field, send the result immediately

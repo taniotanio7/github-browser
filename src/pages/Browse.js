@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { navigate } from "@reach/router";
 
 import SearchBox from "./Browse/SearchBox";
 import RepositoriesList from "./Browse/RepositoriesList";
@@ -14,11 +13,6 @@ function Browse() {
         initialQuery={searchQuery ?? ""}
         onChange={(searchQuery) => {
           setSarchQuery(searchQuery);
-          if (searchQuery) {
-            navigate(`?search=${searchQuery}`, { replace: true });
-          } else {
-            navigate("./", { replace: true });
-          }
         }}
       />
       <RepositoriesList searchQuery={searchQuery} />
