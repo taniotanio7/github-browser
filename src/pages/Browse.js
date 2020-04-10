@@ -5,13 +5,15 @@ import { ReactComponent as GingerCatIllustration } from "../static/ginger-cat-74
 
 import SearchBox from "./Browse/SearchBox";
 import RepositoriesList from "./Browse/RepositoriesList";
-import { useLocation } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     marginTop: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      marginTop: theme.spacing(4),
+    },
   },
   searchContainer: {
     display: "flex",
@@ -47,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Browse() {
   const styles = useStyles();
-  // const location = useLocation();
-  // const urlParams = new URLSearchParams(location.search);
   const [searchQuery, setSarchQuery] = useState("");
 
   return (
