@@ -20,14 +20,10 @@ const RepositoriesList = ({ searchQuery }) => {
   const styles = useStyles();
   const [
     getRepositories,
-    { data, error, loading, fetchMore, networkStatus },
+    { data, error, fetchMore, networkStatus },
   ] = useLazyQuery(REPOSITORY_QUERY, {
     notifyOnNetworkStatusChange: true,
   });
-
-  console.log(
-    JSON.stringify({ error, loading, fetchMore, networkStatus }, null, 2)
-  );
 
   useEffect(() => {
     if (searchQuery) {

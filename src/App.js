@@ -20,7 +20,6 @@ function getInitialState() {
 }
 
 function reducer(state, action) {
-  console.log(`NEW ACTION: ${action.type}`, action.payload);
   switch (action.type) {
     case "LOGIN":
       return {
