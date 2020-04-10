@@ -6,6 +6,7 @@ import ErrorBoundary from "react-error-boundary";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Browse from "./pages/Browse";
 import UnhandledError from "./pages/UnhandledError";
@@ -81,11 +82,19 @@ function App() {
   }, [state]);
 
   if (state.loading) {
-    return <CircularProgress />;
+    return (
+      <Layout>
+        <CircularProgress />
+      </Layout>
+    );
   }
 
   if (!state.apolloClient) {
-    return <Login />;
+    return (
+      <Layout>
+        <Login />
+      </Layout>
+    );
   }
 
   return (
@@ -93,12 +102,14 @@ function App() {
       FallbackComponent={UnhandledError}
       onError={() => dispatch({ type: "LOGOUT" })}
     >
-      <ApolloProvider client={state.apolloClient}>
-        <Router>
-          <Browse path="/" />
-          <RepositoryDetails path="repo/:repoId" />
-        </Router>
-      </ApolloProvider>
+      <Layout loggedIn={true}>
+        <ApolloProvider client={state.apolloClient}>
+          <Router>
+            <Browse path="/" />
+            <RepositoryDetails path="repo/:repoId" />
+          </Router>
+        </ApolloProvider>
+      </Layout>
     </ErrorBoundary>
   );
 }
