@@ -100,7 +100,7 @@ const RepositoriesList = ({ searchQuery }) => {
   function handleLoadMore() {
     if (hasNextPage) {
       fetchMore({
-        variables: { searchQuery: "topic:react", cursor: endCursor },
+        variables: { searchQuery, cursor: endCursor },
         updateQuery: (
           previousResult,
           { fetchMoreResult: { search: result } }

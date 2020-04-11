@@ -42,6 +42,7 @@ export async function setupPersistentCache() {
 
   const localforageApollo = localforage.createInstance({
     name: "apollo-cache",
+    version: 3,
   });
 
   await persistCache({ cache, storage: localforageApollo });
