@@ -85,8 +85,8 @@ export const RepositoryCardSkeleton = () => {
         />
       </div>
       <div className={styles.topics}>
-        {[...Array(tagNumber).keys()].map(() => (
-          <TagSkeleton />
+        {[...Array(tagNumber).keys()].map((i) => (
+          <TagSkeleton key={i} />
         ))}
       </div>
       <Skeleton
