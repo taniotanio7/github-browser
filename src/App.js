@@ -88,7 +88,6 @@ function App() {
       </Layout>
     );
   }
-
   if (!state.apolloClient) {
     return (
       <Layout>
@@ -100,7 +99,11 @@ function App() {
   return (
     <ErrorBoundary
       FallbackComponent={UnhandledError}
-      onError={() => dispatch({ type: "LOGOUT" })}
+      onError={() => {
+        if (process.env?.NODE_ENV !== "development") {
+          dispatch({ type: "LOGOUT" });
+        }
+      }}
     >
       <Layout loggedIn={true}>
         <ApolloProvider client={state.apolloClient}>

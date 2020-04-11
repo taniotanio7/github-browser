@@ -113,7 +113,7 @@ const RepositoriesList = ({ searchQuery }) => {
   return (
     <div data-testid="browserPage">
       <div className={styles.searchModifiers}>
-        <Typography>
+        <Typography gutterBottom>
           There were{" "}
           <span className={styles.repositoryCount}>{totalRepositories}</span>{" "}
           matching repositories.

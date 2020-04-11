@@ -23,7 +23,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSlopeCardMediaStyles } from "@mui-treasury/styles/cardMedia/slope";
 import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { navigate } from "@reach/router";
+import { formatDistanceToNow } from "date-fns";
+import formatNumberK from "../../utils/formatNumberK";
+
 import Tag from "../../components/Tag";
+import Stat from "../../components/Stat";
 
 const useStyles = makeStyles((theme) => ({
   owner: {
@@ -78,14 +82,6 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: "1fr 1fr",
     justifyItems: "stretch",
   },
-  statsGroup: {
-    display: "flex",
-    justifyContent: "center",
-    "& > svg": {
-      marginRight: theme.spacing(1),
-    },
-  },
-  statsGroupLabel: {},
 }));
 
 const RepositoryCard = ({ repo }) => {
@@ -142,26 +138,27 @@ const RepositoryCard = ({ repo }) => {
         </div>
         <div className={styles.stats}>
           <div>
-            <div className={styles.statsGroup}>
-              <GoStar size={21} />
-              <Typography>{repo.stargazers.totalCount}</Typography>
-            </div>
-            <Typography variant="overline" align="center" component="p">
-              Stars
-            </Typography>
+            <Stat
+              icon={GoStar}
+              iconProps={{ size: 21 }}
+              value={formatNumberK(repo.stargazers.totalCount)}
+              valuePosition="center"
+              label="Stars"
+              labelPosition="center"
+            />
           </div>
           <div>
-            <div className={styles.statsGroup}>
-              <GoGitCommit size={21} />
-              <Typography>
-                {new Date(
-                  repo.defaultBranchRef.target.committedDate
-                ).toLocaleDateString()}
-              </Typography>
-            </div>
-            <Typography variant="overline" align="center" component="p">
-              Last commit
-            </Typography>
+            <Stat
+              icon={GoGitCommit}
+              iconProps={{ size: 21 }}
+              value={formatDistanceToNow(
+                new Date(repo.defaultBranchRef.target.committedDate),
+                { addSuffix: true }
+              )}
+              valuePosition="center"
+              label="Last commit"
+              labelPosition="center"
+            />
           </div>
         </div>
         <CardActions>

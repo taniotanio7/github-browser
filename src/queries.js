@@ -63,7 +63,6 @@ export const REPOSITORY_DETAILS_QUERY = gql`
     node(id: $id) {
       ... on Repository {
         name
-        nameWithOwner
         humanReadableName @client
         createdAt
         descriptionHTML
@@ -72,7 +71,7 @@ export const REPOSITORY_DETAILS_QUERY = gql`
         stargazers {
           totalCount
         }
-        repositoryTopics(first: 10) {
+        repositoryTopics(first: 6) {
           nodes {
             topic {
               name
@@ -86,6 +85,9 @@ export const REPOSITORY_DETAILS_QUERY = gql`
         }
         issues {
           totalCount
+        }
+        owner {
+          login
         }
         defaultBranchRef {
           target {

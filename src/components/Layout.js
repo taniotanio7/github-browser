@@ -10,12 +10,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Layout = ({ children, loggedIn }) => {
+const Layout = ({ children, loggedIn, location }) => {
   const styles = useStyles();
 
   return (
     <div className={styles.root} id="appRoot">
-      <AppBar loggedIn={loggedIn} />
+      <AppBar loggedIn={loggedIn} location={location} />
       {children}
     </div>
   );
