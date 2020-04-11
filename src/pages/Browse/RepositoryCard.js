@@ -162,11 +162,15 @@ const RepositoryCard = ({ repo }) => {
           </div>
         </div>
         <CardActions>
-          <ExternalLink component={IconButton} href={repo.url}>
+          <ExternalLink component={IconButton} href={repo.url} color="inherit">
             <GoMarkGithub />
           </ExternalLink>
           {repo.homepageUrl && (
-            <ExternalLink component={IconButton} href={repo.homepageUrl}>
+            <ExternalLink
+              component={IconButton}
+              href={repo.homepageUrl}
+              color="inherit"
+            >
               <Home style={{ width: 29, height: 29 }} />
             </ExternalLink>
           )}

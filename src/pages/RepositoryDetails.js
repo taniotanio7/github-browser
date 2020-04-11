@@ -92,11 +92,11 @@ const RepositoryDetails = ({ repoId }) => {
       </Typography>
       <Typography align="center">by {repo.owner.login}</Typography>
       <div className={styles.links}>
-        <Link href={repo.url} component={IconButton}>
+        <Link href={repo.url} component={IconButton} color="inherit">
           <GoMarkGithub />
         </Link>
         {repo.homepageUrl && (
-          <Link href={repo.homepageUrl} component={IconButton}>
+          <Link href={repo.homepageUrl} component={IconButton} color="inherit">
             <Home style={{ height: 28, width: 28 }} />
           </Link>
         )}
