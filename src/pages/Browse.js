@@ -40,9 +40,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   illustration: {
-    height: "80%",
+    height: "250px",
+    [theme.breakpoints.up("sm")]: {
+      height: "300px",
+    },
     [theme.breakpoints.up("md")]: {
-      height: "50%",
+      height: "400px",
     },
   },
 }));
