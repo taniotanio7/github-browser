@@ -10,6 +10,7 @@ import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Browse from "./pages/Browse";
 import UnhandledError from "./pages/UnhandledError";
+import { ManageScroll } from "./components/ManageScroll";
 
 import { apolloConfig, setupPersistentCache } from "./apollo";
 import RepositoryDetails from "./pages/RepositoryDetails";
@@ -120,6 +121,7 @@ function App() {
             <Browse path="/" />
             <RepositoryDetails path="repo/:repoId" />
           </Router>
+          <ManageScroll />
         </ApolloProvider>
       </Layout>
     </ErrorBoundary>
