@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { TextField, InputAdornment, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
-import { debounce } from "lodash-es";
 import { navigate, useLocation } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,26 +29,16 @@ const SearchBox = ({ onChange }) => {
   const styles = useStyles();
   const location = useLocation();
   const [query, setQuery] = useState("");
-  const [debouncedFn, setDebouncedFn] = useState(null);
 
   const handleChange = (event) => {
-    event.persist();
     const value = event.target.value;
     setQuery(value);
+    onChange(value);
     if (value) {
-      navigate(`?search=${value}`, { replace: true });
+      navigate(`?search=${encodeURI(value)}`, { replace: true });
     } else {
       navigate("./", { replace: true });
     }
-    if (!value) {
-      // If the change was to empty field, send the result immediately
-      onChange("");
-      return;
-    }
-    const fn = debounce(() => {
-      onChange(value);
-    }, 600);
-    setDebouncedFn(fn);
   };
 
   useEffect(() => {
@@ -59,6 +48,7 @@ const SearchBox = ({ onChange }) => {
       setQuery(newQuery);
       onChange(newQuery);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   return (
@@ -73,7 +63,6 @@ const SearchBox = ({ onChange }) => {
         variant="outlined"
         value={query ?? ""}
         onChange={handleChange}
-        onBlur={() => debouncedFn && debouncedFn.flush()}
         placeholder="Search..."
         InputProps={{
           endAdornment: (

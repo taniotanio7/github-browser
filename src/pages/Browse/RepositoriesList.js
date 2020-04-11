@@ -8,6 +8,7 @@ import { CircularProgress, Typography, Fab } from "@material-ui/core";
 import { ArrowUpward } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDebouncedCallback } from "use-debounce";
 import "@github/g-emoji-element";
 
 import ScrollTop from "../../components/ScrollTop";
@@ -59,9 +60,13 @@ const RepositoriesList = ({ searchQuery }) => {
     notifyOnNetworkStatusChange: true,
   });
 
+  const [fetchNewItems] = useDebouncedCallback((searchQuery) => {
+    getRepositories({ variables: { searchQuery } });
+  }, 800);
+
   useEffect(() => {
     if (searchQuery) {
-      getRepositories({ variables: { searchQuery } });
+      fetchNewItems(searchQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
