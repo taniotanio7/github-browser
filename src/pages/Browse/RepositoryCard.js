@@ -22,7 +22,7 @@ import { ArrowForward, Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSlopeCardMediaStyles } from "@mui-treasury/styles/cardMedia/slope";
 import TextInfoContent from "@mui-treasury/components/content/textInfo";
-import { navigate } from "@reach/router";
+import { Link } from "@reach/router";
 import { formatDistanceToNow } from "date-fns";
 import formatNumberK from "../../utils/formatNumberK";
 
@@ -174,15 +174,18 @@ const RepositoryCard = ({ repo }) => {
               <Home style={{ width: 29, height: 29 }} />
             </ExternalLink>
           )}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate(`/repo/${repo.id}`)}
-            endIcon={<ArrowForward />}
-            style={{ marginLeft: "auto" }}
+          <Link
+            to={`/repo/${repo.id}`}
+            style={{ marginLeft: "auto", textDecoration: "none" }}
           >
-            View details
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<ArrowForward />}
+            >
+              View details
+            </Button>
+          </Link>
         </CardActions>
       </CardContent>
     </Card>
