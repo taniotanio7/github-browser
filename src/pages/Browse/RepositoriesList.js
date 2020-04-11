@@ -137,9 +137,8 @@ const RepositoriesList = ({ searchQuery }) => {
       <div className={styles.reposList}>
         {repos.map((repo, i) => {
           return (
-            <React.Fragment key={repo.id}>
-              <RepositoryCard repo={repo} />
-              {i === repos.length - 3 && (
+            <div key={repo.id}>
+              {i === repos.length - 5 && (
                 <InView
                   as="div"
                   triggerOnce
@@ -147,16 +146,17 @@ const RepositoriesList = ({ searchQuery }) => {
                   children={null}
                 />
               )}
-            </React.Fragment>
+              <RepositoryCard repo={repo} />
+            </div>
           );
         })}
       </div>
-      {/* Refetching */}
       <ScrollTop className={styles.fab}>
         <Fab color="secondary">
           <ArrowUpward />
         </Fab>
       </ScrollTop>
+      {/* Refetching */}
       {networkStatus === 3 && <CircularProgress className={styles.loader} />}
     </div>
   );
