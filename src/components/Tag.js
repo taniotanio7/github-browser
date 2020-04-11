@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     height: "30px",
     fontWeight: "bold",
     padding: "8px 10px",
+    lineHeight: "0",
   },
 });
 
