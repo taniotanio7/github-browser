@@ -24,6 +24,7 @@ import formatNumberK from "../utils/formatNumberK";
 import { REPOSITORY_DETAILS_QUERY } from "../queries";
 import Tag from "../components/Tag";
 import Stat from "../components/Stat";
+import RepositoryDetailsSkeleton from "./RepositoryDetails/RepositoryDetailsSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -73,8 +74,9 @@ const RepositoryDetails = ({ repoId }) => {
     variables: { id: repoId },
   });
 
+  // if (true) {
   if (loading) {
-    return <p>Loading...</p>;
+    return <RepositoryDetailsSkeleton />;
   }
 
   if (error) {

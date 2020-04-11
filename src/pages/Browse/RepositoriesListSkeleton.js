@@ -53,12 +53,12 @@ const useCardStyles = makeStyles((theme) => ({
 
 const INITIAL_AMOUNT = 9;
 
-const TagSkeleton = () => {
+export const TagSkeleton = () => {
   const width = random(60, 130, false);
   return <Skeleton variant="rect" height={28} width={width} />;
 };
 
-const RepositoryCardSkeleton = () => {
+export const RepositoryCardSkeleton = () => {
   const styles = useCardStyles();
   const tagNumber = random(1, 3, false);
 
