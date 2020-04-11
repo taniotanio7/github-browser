@@ -58,6 +58,7 @@ function Browse() {
     <Container className={styles.root}>
       <div className={styles.searchContainer}>
         <SearchBox
+          query={searchQuery}
           onChange={(searchQuery) => {
             setSarchQuery(searchQuery);
           }}

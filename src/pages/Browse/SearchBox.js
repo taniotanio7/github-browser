@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { TextField, InputAdornment, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
@@ -25,27 +25,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchBox = ({ onChange }) => {
+const SearchBox = ({ query = "", onChange }) => {
   const styles = useStyles();
   const location = useLocation();
-  const [query, setQuery] = useState("");
 
   const handleChange = (event) => {
     const value = event.target.value;
-    setQuery(value);
     onChange(value);
-    if (value) {
-      navigate(`?search=${encodeURI(value)}`, { replace: true });
+  };
+
+  useEffect(() => {
+    if (query) {
+      navigate(`?search=${encodeURI(query)}`, { replace: true });
     } else {
       navigate("./", { replace: true });
     }
-  };
+  }, [query]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const newQuery = urlParams.get("search") ?? "";
     if (newQuery !== query) {
-      setQuery(newQuery);
       onChange(newQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +61,7 @@ const SearchBox = ({ onChange }) => {
         type="text"
         name="searchQuery"
         variant="outlined"
-        value={query ?? ""}
+        value={query}
         onChange={handleChange}
         placeholder="Search..."
         InputProps={{
