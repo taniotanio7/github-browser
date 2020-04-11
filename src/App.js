@@ -84,7 +84,16 @@ function App() {
   if (state.loading) {
     return (
       <Layout>
-        <CircularProgress />
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress size={80} />
+        </div>
       </Layout>
     );
   }
