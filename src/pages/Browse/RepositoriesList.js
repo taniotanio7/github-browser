@@ -6,10 +6,12 @@ import RepositoryCard from "./RepositoryCard";
 import { InView } from "react-intersection-observer";
 import { CircularProgress, Typography, Fab } from "@material-ui/core";
 import { ArrowUpward } from "@material-ui/icons";
+import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import "@github/g-emoji-element";
 
 import ScrollTop from "../../components/ScrollTop";
+import RepositoriesListSkeleton from "./RepositoriesListSkeleton";
 
 const useStyles = makeStyles((theme) => ({
   searchModifiers: {
@@ -70,7 +72,20 @@ const RepositoriesList = ({ searchQuery }) => {
 
   // Initial load
   if (networkStatus === 1 || networkStatus === 4 || !data) {
-    return <CircularProgress />;
+    return (
+      <div>
+        <div>
+          <Skeleton
+            variant="text"
+            style={{ width: "33%", marginBottom: "0.35em" }}
+            className={styles.searchModifiers}
+          />
+        </div>
+        <div>
+          <RepositoriesListSkeleton />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
