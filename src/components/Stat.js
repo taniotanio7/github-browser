@@ -49,7 +49,7 @@ const Stat = ({
   const valueClass = valuePosition === "center" && styles.valueCenter;
 
   if (!value) {
-    return null;
+    return <div />;
   }
 
   return (
