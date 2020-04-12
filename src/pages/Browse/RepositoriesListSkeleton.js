@@ -70,8 +70,7 @@ export const RepositoryCardSkeleton = () => {
           display: "flex",
           alignItems: "flex-end",
           flexDirection: "column",
-        }}
-      >
+        }}>
         <Skeleton variant="circle" className={styles.avatar} />
         <Skeleton variant="text" width="6em" />
       </div>
@@ -130,4 +129,4 @@ const RepositoriesListSkeleton = () => {
   );
 };
 
-export default RepositoriesListSkeleton;
+export default React.memo(RepositoriesListSkeleton);
