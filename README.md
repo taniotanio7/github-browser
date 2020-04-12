@@ -1,4 +1,5 @@
 [![buddy pipeline](https://app.buddy.works/test-workspace-7/github-browser/pipelines/pipeline/250069/badge.svg?token=fa12cda59a4a0789c932a095c43d15e967adc356add25bb7d11951bf5024803e "buddy pipeline")](https://app.buddy.works/test-workspace-7/github-browser/pipelines/pipeline/250069)
+
 Simple GitHub public repositories browser.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
