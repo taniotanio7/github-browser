@@ -25,6 +25,7 @@
     "localforage": "^1.7.3",
     "lodash-es": "^4.17.15",
     "react": "^16.13.1",
+    "react-debounce-render": "^6.0.0",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^1.2.5",
     "react-icons": "^3.9.0",

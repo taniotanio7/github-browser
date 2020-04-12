@@ -3,6 +3,7 @@ import { TextField, InputAdornment, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Search } from "@material-ui/icons";
 import { navigate, useLocation } from "@reach/router";
+import { useDebouncedCallback } from "use-debounce";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,13 +35,18 @@ const SearchBox = ({ query = "", onChange }) => {
     onChange(value);
   };
 
-  useEffect(() => {
+  const [setNewUrl] = useDebouncedCallback(() => {
+    console.log("setting new url");
     if (query) {
       navigate(`?search=${encodeURI(query)}`, { replace: true });
     } else {
       navigate("./", { replace: true });
     }
-  }, [query]);
+  }, 1000);
+
+  useEffect(() => {
+    setNewUrl();
+  }, [query, setNewUrl]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -49,13 +55,12 @@ const SearchBox = ({ query = "", onChange }) => {
       onChange(newQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [location.search]);
 
   return (
     <Paper
       elevation={20}
-      className={query ? styles.containerFilled : styles.container}
-    >
+      className={query ? styles.containerFilled : styles.container}>
       <TextField
         fullWidth
         type="text"
