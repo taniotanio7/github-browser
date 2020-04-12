@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactComponent as GingerCatIllustration } from "../static/ginger-cat-746.svg";
+import debounceRender from "react-debounce-render";
 
 import SearchBox from "./Browse/SearchBox";
 import RepositoriesList from "./Browse/RepositoriesList";
@@ -50,6 +51,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DisplayContent = React.memo(({ searchQuery }) => {
+  console.log("rerender content");
+  const styles = useStyles();
+  return searchQuery ? (
+    <RepositoriesList searchQuery={searchQuery} />
+  ) : (
+    <div className={styles.illustrationContainer}>
+      <GingerCatIllustration width="100%" className={styles.illustration} />
+      <Typography variant="h6" align="center">
+        Type something in the search bar <br />
+        I'll look through all public GitHub repositories for you!
+      </Typography>
+    </div>
+  );
+});
+
+const DebouncedDisplayContent = debounceRender(DisplayContent, 500);
+
 function Browse() {
   const styles = useStyles();
   const [searchQuery, setSarchQuery] = useState("");
@@ -64,17 +83,7 @@ function Browse() {
           }}
         />
       </div>
-      {searchQuery ? (
-        <RepositoriesList searchQuery={searchQuery} />
-      ) : (
-        <div className={styles.illustrationContainer}>
-          <GingerCatIllustration width="100%" className={styles.illustration} />
-          <Typography variant="h6" align="center">
-            Type something in the search bar <br />
-            I'll look through all public GitHub repositories for you!
-          </Typography>
-        </div>
-      )}
+      <DebouncedDisplayContent searchQuery={searchQuery} />
     </Container>
   );
 }
