@@ -91,7 +91,6 @@ const RepositoryDetails = ({ repoId }) => {
     variables: { id: repoId },
   });
 
-  // if (true) {
   if (loading) {
     return <RepositoryDetailsSkeleton />;
   }
