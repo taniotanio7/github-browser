@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   readmeContainer: {
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    overflow: "overlay",
   },
   readmeContent: {
     "& a": {

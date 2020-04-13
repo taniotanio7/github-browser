@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     "&:focus-within": {
       boxShadow: theme.shadows[10],
     },
+    height: "56px",
   },
   containerFilled: {
     width: "100%",
