@@ -15,11 +15,13 @@ import {
   GoGitCommit,
 } from "react-icons/go";
 import { Home, History, Today } from "@material-ui/icons";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown/with-html";
 import { useQuery } from "@apollo/react-hooks";
 import { formatDistanceToNow } from "date-fns";
 import handleGraphqlErrors from "../utils/handleGraphqlErrors";
 import formatNumberK from "../utils/formatNumberK";
+import "@primer/css/core/index.scss";
+import "@primer/css/markdown/index.scss";
 
 import { REPOSITORY_DETAILS_QUERY } from "../queries";
 import Tag from "../components/Tag";
@@ -59,13 +61,14 @@ const useStyles = makeStyles((theme) => ({
   },
   readmeContainer: {
     padding: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(3),
+    },
     marginBottom: theme.spacing(2),
     overflow: "overlay",
-  },
-  readmeContent: {
-    "& a": {
-      color: theme.palette.primary.main,
-    },
+    maxWidth: "914px",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 }));
 
@@ -155,17 +158,18 @@ const RepositoryDetails = ({ repoId }) => {
           />
         </div>
       </Paper>
-      <Paper className={styles.readmeContainer}>
-        <Typography variant="h6" component="h3">
-          Project Readme
-        </Typography>
-        {repo.readme && (
+      {(repo.readme || repo.readmeSmall) && (
+        <Paper className={styles.readmeContainer}>
+          <Typography variant="h6" component="h3">
+            Repository Readme
+          </Typography>
           <ReactMarkdown
-            source={repo.readme.text}
-            className={styles.readmeContent}
+            source={repo?.readme?.text ?? repo?.readmeSmall?.text}
+            className="markdown-body entry-content"
+            escapeHtml={false}
           />
-        )}
-      </Paper>
+        </Paper>
+      )}
     </Container>
   );
 };

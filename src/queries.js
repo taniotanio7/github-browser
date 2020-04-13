@@ -104,6 +104,11 @@ export const REPOSITORY_DETAILS_QUERY = gql`
             text
           }
         }
+        readmeSmall: object(expression: "master:readme.md") {
+          ... on Blob {
+            text
+          }
+        }
       }
     }
   }
