@@ -61,8 +61,14 @@ const useStyles = makeStyles((theme) => ({
   },
   readmeContainer: {
     padding: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(3),
+    },
     marginBottom: theme.spacing(2),
     overflow: "overlay",
+    maxWidth: "914px",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 }));
 
@@ -155,7 +161,7 @@ const RepositoryDetails = ({ repoId }) => {
       {(repo.readme || repo.readmeSmall) && (
         <Paper className={styles.readmeContainer}>
           <Typography variant="h6" component="h3">
-            Project Readme
+            Repository Readme
           </Typography>
           <ReactMarkdown
             source={repo?.readme?.text ?? repo?.readmeSmall?.text}
