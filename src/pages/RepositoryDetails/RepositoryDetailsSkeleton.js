@@ -63,10 +63,19 @@ const RepositoryDetailsSkeleton = () => {
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-        }}
-      >
-        <Skeleton variant="text" height={41} width="20%" />
-        <Skeleton variant="text" height={24} width="10%" />
+        }}>
+        <Skeleton
+          variant="text"
+          height={41}
+          width="20%"
+          style={{ minWidth: "150px" }}
+        />
+        <Skeleton
+          variant="text"
+          height={24}
+          width="10%"
+          style={{ minWidth: "100px" }}
+        />
       </div>
       <div className={styles.links}>
         <Skeleton

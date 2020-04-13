@@ -46,6 +46,19 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(1),
     },
   },
+  description: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(3),
+    fontSize: "1rem",
+    fontWeight: "500",
+    borderLeft: `4px solid ${theme.palette.primary.main}`,
+    "& p": {
+      margin: 0,
+    },
+  },
   statsContainer: {
     padding: theme.spacing(2),
     marginBottom: theme.spacing(4),
@@ -78,7 +91,6 @@ const RepositoryDetails = ({ repoId }) => {
     variables: { id: repoId },
   });
 
-  // if (true) {
   if (loading) {
     return <RepositoryDetailsSkeleton />;
   }
@@ -112,7 +124,7 @@ const RepositoryDetails = ({ repoId }) => {
             <Tag key={topic.name}>{topic.name}</Tag>
           ))}
       </div>
-      <div>
+      <div className={styles.description}>
         <p dangerouslySetInnerHTML={{ __html: repo.descriptionHTML }} />
       </div>
       <Paper elevation={6} className={styles.statsContainer}>
@@ -160,7 +172,7 @@ const RepositoryDetails = ({ repoId }) => {
       </Paper>
       {(repo.readme || repo.readmeSmall) && (
         <Paper className={styles.readmeContainer}>
-          <Typography variant="h6" component="h3">
+          <Typography variant="h6" component="h3" gutterBottom>
             Repository Readme
           </Typography>
           <ReactMarkdown
